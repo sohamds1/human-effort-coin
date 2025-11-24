@@ -1,215 +1,232 @@
 # HumanEffortCoin (HEC) - Proof-of-Labor Economic Oracle
 
-![Status](https://img.shields.io/badge/status-demo-blue)
+![Status](https://img.shields.io/badge/status-active-success)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Python](https://img.shields.io/badge/python-3.9%2B-blue)
 ![React](https://img.shields.io/badge/react-18-61dafb)
-![GitHub stars](https://img.shields.io/github/stars/sohamds1/human-effort-coin?style=social)
-![GitHub forks](https://img.shields.io/github/forks/sohamds1/human-effort-coin?style=social)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.68%2B-009688)
+![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 
-A decentralized economic protocol where **1 EffortCoin (EC) = 1 Verified Hour of Human Labor**. HEC introduces Proof-of-Labor (PoL) as a novel consensus mechanism, minting currency based on verified, useful human time expenditure.
+> **"Currency backed by the most valuable resource on Earth: Human Time."**
+
+HumanEffortCoin (HEC) is an autonomous economic protocol that mints currency based on verified human labor. Unlike Bitcoin (Proof-of-Work) which expends energy, or Ethereum (Proof-of-Stake) which relies on capital, HEC introduces **Proof-of-Labor (PoL)**.
+
+This repository is a fully functional **Economic Oracle & Simulation** that demonstrates the entire lifecycle: Task Creation → AI Verification → Token Minting → Economic Growth.
 
 ---
 
 ## 📑 Table of Contents
 
-1. [Overview](#-overview)
-2. [Core Concept](#-core-concept)
-3. [Architecture Deep Dive](#-architecture-deep-dive)
-4. [Installation & Setup](#-installation--setup)
-5. [Project Structure](#-project-structure)
-6. [Backend Explained](#-backend-explained)
-7. [Frontend Explained](#-frontend-explained)
-8. [Customization Guide](#-customization-guide)
-9. [API Documentation](#-api-documentation)
-10. [Database Schema](#-database-schema)
-11. [Troubleshooting](#-troubleshooting)
-12. [Contributing](#-contributing)
-13. [License](#-license)
+- [🌟 Key Features](#-key-features)
+- [🏗️ System Architecture](#-system-architecture)
+- [🚀 Quick Start Guide](#-quick-start-guide)
+- [📂 Project Structure](#-project-structure)
+- [🛠️ How to Fork & Customize](#-how-to-fork--customize)
+  - [Adding New Task Types](#1-adding-new-task-types)
+  - [Modifying the Economic Formula](#2-modifying-the-economic-formula)
+  - [Customizing the Dashboard](#3-customizing-the-dashboard)
+- [🔌 API Reference](#-api-reference)
+- [🗺️ Roadmap & Ideas](#-roadmap--ideas)
+- [🤝 Contributing](#-contributing)
 
 ---
 
-## 🎯 Overview
+## 🌟 Key Features
 
-HumanEffortCoin is an **autonomous economic simulation** demonstrating how a currency can be backed by verified human labor instead of traditional commodities or fiat guarantees.
-
-### What Makes HEC Unique?
-
-- **Labor-Backed Currency**: Unlike Bitcoin (computational proof-of-work) or traditional fiat, HEC is backed by verified human time
-- **AI Verification**: Simulated AI agent validates labor submissions (ready for real AI integration)
-- **Real-time Economics**: Watch supply, demand, and GDP evolve autonomously
-- **Zero Blockchain Dependency**: Currently runs on SQLite (easily upgradeable to blockchain)
-- **Open Source**: Fork, customize, and build your own economic system
+- **Autonomous Economy**: A self-running simulation driver (`genesis_driver.py`) that generates users, tasks, and transactions.
+- **AI Verification Agent**: A mock AI system that evaluates "proof of work" (GPS, photos, telemetry) to approve or reject claims.
+- **Real-time Dashboard**: A premium, skeuomorphic React UI that visualizes the economy in real-time.
+- **Dynamic GDP**: Watch the economy grow as more labor is verified.
+- **Simulation Control**: Pause, resume, and inspect the system state directly from the UI.
 
 ---
 
-## 💡 Core Concept
+## 🏗️ System Architecture
 
-### The Economic Formula
+The system consists of three distinct components working in harmony:
 
+```mermaid
+graph TD
+    A[Frontend Dashboard] <-->|REST API| B[FastAPI Gateway]
+    B <-->|SQLAlchemy| C[(SQLite Database)]
+    D[Genesis Driver] <-->|Writes| C
+    D -->|Simulates| E[AI Verification Agent]
+    E -->|Validates| F[Task Submissions]
 ```
-Tokens Minted = Hours_Logged × Skill_Multiplier × Reputation_Score
-```
 
-**Example:**
-- Worker submits 2.5 hours of coding
-- Skill multiplier for coding: 1.2x
-- Worker reputation: 0.95 (good standing)
-- **Tokens minted**: 2.5 × 1.2 × 0.95 = **2.85 EC**
+1.  **HEC Core (Backend)**: Python/FastAPI server that exposes data to the world.
+2.  **Genesis Driver (Simulation)**: A background process that acts as the "World Engine", creating users and simulating labor.
+3.  **HEC Dashboard (Frontend)**: A React/Vite application for visualization and control.
 
 ---
 
-## 🏗️ Architecture Deep Dive
+## 🚀 Quick Start Guide
 
-### System Components
-
-```
-┌─────────────────────────────────────────────────────────┐
-│                    HEC ECOSYSTEM                        │
-├─────────────────────────────────────────────────────────┤
-│                                                         │
-│  ┌─────────────┐    ┌─────────────┐    ┌───────────┐  │
-│  │   Frontend  │───▶│  REST API   │───▶│  Database │  │
-│  │   (React)   │    │  (FastAPI)  │    │  (SQLite) │  │
-│  └─────────────┘    └─────────────┘    └───────────┘  │
-│         │                   │                   │      │
-│         │                   ▼                   │      │
-│         │           ┌─────────────┐            │      │
-│         └──────────▶│  Genesis    │────────────┘      │
-│                     │  Driver     │                    │
-│                     │ (Simulator) │                    │
-│                     └─────────────┘                    │
-│                            │                           │
-│                            ▼                           │
-│                     ┌─────────────┐                    │
-│                     │ Mock Agent  │                    │
-│                     │  (AI Sim)   │                    │
-│                     └─────────────┘                    │
-└─────────────────────────────────────────────────────────┘
-```
-
----
-
-## 🚀 Installation & Setup
+Follow these steps to get your own instance running in minutes.
 
 ### Prerequisites
+- Python 3.9+
+- Node.js 16+
 
-| Software | Version | Purpose |
-|----------|---------|---------|
-| **Python** | 3.9+ | Backend API & Simulation |
-| **Node.js** | 16+ | Frontend build & dev server |
-| **npm** | 8+ | Package management |
-
-### Step-by-Step Installation
-
-#### 1. Clone the Repository
-
+### 1. Clone & Setup Backend
 ```bash
 git clone https://github.com/sohamds1/human-effort-coin.git
 cd human-effort-coin
-```
 
-#### 2. Install Python Dependencies
-
-```bash
+# Install Python dependencies
 pip install fastapi uvicorn sqlalchemy
 ```
 
-#### 3. Install Frontend Dependencies
-
+### 2. Setup Frontend
 ```bash
 cd hec-dashboard
 npm install
 cd ..
 ```
 
-### Running the System
+### 3. Run the System (The "Trinity")
+You need **3 separate terminal windows** to run the full stack:
 
-You need **3 terminal windows** running simultaneously:
-
-#### Terminal 1: API Server
-
+**Terminal 1: The API Server**
 ```bash
 cd hec-core
-python -m uvicorn api.main:app --port 8000
+python -m uvicorn api.main:app --port 8000 --reload
 ```
 
-#### Terminal 2: Simulation Driver
-
+**Terminal 2: The Simulation Driver**
 ```bash
+# Windows
+$env:PYTHONIOENCODING='utf-8'
+python hec-core/genesis_driver.py
+
+# Mac/Linux
+export PYTHONIOENCODING=utf-8
 python hec-core/genesis_driver.py
 ```
 
-#### Terminal 3: Dashboard
-
+**Terminal 3: The Dashboard**
 ```bash
 cd hec-dashboard
 npm run dev
 ```
 
-#### Access the Dashboard
-
-Open your browser to: **http://localhost:5173**
+Open **http://localhost:5173** to see your economy alive!
 
 ---
 
-## 📁 Project Structure
+## 📂 Project Structure
 
-```
+Understanding the codebase is key to customization.
+
+```text
 human-effort-coin/
+├── hec-core/                  # 🐍 PYTHON BACKEND
+│   ├── agent/                 # AI Logic
+│   │   └── blockchain.py      # Mock Ledger & Verification Logic
+│   ├── api/                   # FastAPI Server
+│   │   ├── main.py            # App Entry Point
+│   │   └── routes.py          # API Endpoints (/stats, /feed)
+│   ├── database/              # Database Layer
+│   │   └── models.py          # User, Task, Submission Models
+│   └── genesis_driver.py      # 🤖 THE SIMULATION ENGINE (Start here!)
 │
-├── hec-core/                       # Backend (Python)
-│   ├── api/                        # REST API
-│   │   ├── main.py                 # FastAPI app entry point
-│   │   └── routes.py               # API endpoint definitions
-│   ├── database/                   # Data layer
-│   │   └── models.py               # SQLAlchemy ORM models
-│   ├── agent/                      # Mock AI agent
-│   └── genesis_driver.py           # Simulation engine
-│
-├── hec-dashboard/                  # Frontend (React)
+├── hec-dashboard/             # ⚛️ REACT FRONTEND
 │   ├── src/
-│   │   ├── App.jsx                 # Main React component
-│   │   └── index.css               # Global styles
-│   └── package.json
+│   │   ├── App.jsx            # Main Dashboard Logic
+│   │   └── index.css          # Styling (Skeuomorphic Design)
+│   └── ...
 │
-├── .gitignore                      # Git ignore rules
-├── README.md                       # This file
-├── hec_protocol.md                 # Technical specification
-├── start_hec.bat                   # Windows startup script
-└── hec_world_v3.db                 # SQLite database (gitignored)
+└── hec_world_v3.db            # SQLite Database (Auto-created)
 ```
 
 ---
 
-## 🔧 Backend Explained
+## 🛠️ How to Fork & Customize
 
-### api/main.py - FastAPI Application
+This project is designed to be hacked. Here are the most common things you'll want to change.
 
-The backend serves as the gateway for the frontend and simulation driver. It uses FastAPI for high performance and easy API definition.
+### 1. Adding New Task Types
+Want to add "Coding" or "Teaching" as verifiable labor?
 
-### database/models.py - Database Schema
+1. Open `hec-core/genesis_driver.py`
+2. Find the `TASK_TYPES` list.
+3. Add your new task:
+   ```python
+   {
+       "type": "OPEN_SOURCE_CONTRIBUTION",
+       "skill_multiplier": 2.5,  # High value work!
+       "evidence_required": ["GITHUB_PR_LINK", "MERGE_HASH"]
+   }
+   ```
+4. Restart the driver. The simulation will now generate these tasks!
 
-We use SQLAlchemy with SQLite for a lightweight, portable database. The schema includes Users, Tasks, TaskSubmissions, and SystemConfig.
+### 2. Modifying the Economic Formula
+Want to change how tokens are calculated?
 
-### genesis_driver.py - Simulation Engine
+1. Open `hec-core/genesis_driver.py`
+2. Locate the `calculate_mint_amount` function.
+3. Change the logic:
+   ```python
+   # Example: Add a bonus for weekend work
+   mint_amount = (hours * skill_multiplier)
+   if is_weekend():
+       mint_amount *= 1.5
+   ```
 
-This script simulates the "world" by generating random users, creating tasks, and simulating the AI verification process. It's the engine that makes the dashboard come alive.
+### 3. Customizing the Dashboard
+Want to change the color scheme or branding?
+
+1. Open `hec-dashboard/src/index.css`
+2. The design uses CSS variables. Change the `:root` values:
+   ```css
+   :root {
+     --primary-accent: #ff00ff; /* Change to your brand color */
+     --bg-dark: #0a0a0a;
+   }
+   ```
+3. To change the layout, edit `hec-dashboard/src/App.jsx`.
 
 ---
 
-## 🎨 Frontend Explained
+## 🔌 API Reference
 
-The frontend is built with React and Vite. It uses a **Skeuomorphic Minimalism** design language with dark mode, gradients, and depth effects. It polls the API every 2 seconds to provide a real-time experience.
+The backend exposes a REST API at `http://localhost:8000`.
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/stats` | Global economy stats (GDP, Users, Minted) |
+| `GET` | `/feed` | Recent transactions and verifications |
+| `GET` | `/simulation/status` | Check if simulation is running |
+| `POST` | `/simulation/start` | Resume the simulation driver |
+| `POST` | `/simulation/stop` | Pause the simulation driver |
+
+---
+
+## 🗺️ Roadmap & Ideas
+
+If you're looking for something to build, here are some great "Next Steps" for this project:
+
+- [ ] **Real AI Integration**: Replace the mock verification in `blockchain.py` with OpenAI/Gemini API to actually analyze image proofs.
+- [ ] **Mobile App**: Build a React Native app to allow *real* users to submit tasks (GPS/Camera).
+- [ ] **Blockchain Bridge**: Write a Solidity contract to mint *real* tokens on Polygon/Ethereum based on the Oracle's output.
+- [ ] **Multi-Tenant**: Allow multiple organizations to run their own HEC economies.
 
 ---
 
 ## 🤝 Contributing
 
-We welcome contributions! Please fork the repository and submit a pull request.
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ---
 
 ## 📜 License
 
-MIT License - See LICENSE file for details.
+Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+
+**Built with ❤️ by Soham Das**
