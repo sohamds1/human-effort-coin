@@ -4,6 +4,10 @@
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Python](https://img.shields.io/badge/python-3.9%2B-blue)
 ![React](https://img.shields.io/badge/react-18-61dafb)
+![GitHub stars](https://img.shields.io/github/stars/sohamds1/human-effort-coin?style=social)
+![GitHub forks](https://img.shields.io/github/forks/sohamds1/human-effort-coin?style=social)
+![Python](https://img.shields.io/badge/python-3.9%2B-blue)
+![React](https://img.shields.io/badge/react-18-61dafb)
 
 A decentralized economic protocol where **1 EffortCoin (EC) = 1 Verified Hour of Human Labor**. HEC introduces Proof-of-Labor (PoL) as a novel consensus mechanism, minting currency based on verified, useful human time expenditure.
 
