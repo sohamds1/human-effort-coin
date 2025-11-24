@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import './App.css'
 
-const API_URL = "http://127.0.0.1:8000"
+// Use Vercel API if deployed, otherwise localhost
+const API_URL = import.meta.env.VITE_API_URL ||
+  (import.meta.env.PROD ? "/api" : "http://127.0.0.1:8000")
 
 function App() {
   const [stats, setStats] = useState({ total_users: 0, total_minted: 0, total_tasks: 0 })
