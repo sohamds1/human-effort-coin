@@ -1,232 +1,159 @@
-# HumanEffortCoin (HEC) - Proof-of-Labor Economic Oracle
+# HumanEffortCoin (HEC) - The Proof-of-Labor Protocol
 
-![Status](https://img.shields.io/badge/status-active-success)
+![Status](https://img.shields.io/badge/status-experimental-orange)
 ![License](https://img.shields.io/badge/license-MIT-green)
-![Python](https://img.shields.io/badge/python-3.9%2B-blue)
-![React](https://img.shields.io/badge/react-18-61dafb)
-![FastAPI](https://img.shields.io/badge/FastAPI-0.68%2B-009688)
-![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
+![Concept](https://img.shields.io/badge/concept-proof--of--labor-blue)
 
-> **"Currency backed by the most valuable resource on Earth: Human Time."**
+> **"What if money wasn't backed by gold, government decrees, or wasted electricity—but by the sweat of your brow?"**
 
-HumanEffortCoin (HEC) is an autonomous economic protocol that mints currency based on verified human labor. Unlike Bitcoin (Proof-of-Work) which expends energy, or Ethereum (Proof-of-Stake) which relies on capital, HEC introduces **Proof-of-Labor (PoL)**.
+HumanEffortCoin (HEC) is an experimental economic protocol and simulation that explores a radical question: **Can we tokenize human time itself?**
 
-This repository is a fully functional **Economic Oracle & Simulation** that demonstrates the entire lifecycle: Task Creation → AI Verification → Token Minting → Economic Growth.
+This repository contains a fully functional **Economic Oracle & Simulation** that demonstrates this concept in action. It is not just code; it is a provocation.
 
 ---
 
 ## 📑 Table of Contents
 
-- [🌟 Key Features](#-key-features)
-- [🏗️ System Architecture](#-system-architecture)
-- [🚀 Quick Start Guide](#-quick-start-guide)
-- [📂 Project Structure](#-project-structure)
-- [🛠️ How to Fork & Customize](#-how-to-fork--customize)
-  - [Adding New Task Types](#1-adding-new-task-types)
-  - [Modifying the Economic Formula](#2-modifying-the-economic-formula)
-  - [Customizing the Dashboard](#3-customizing-the-dashboard)
-- [🔌 API Reference](#-api-reference)
-- [🗺️ Roadmap & Ideas](#-roadmap--ideas)
-- [🤝 Contributing](#-contributing)
+1. [🧠 The Philosophy: Proof-of-Labor](#-the-philosophy-proof-of-labor)
+2. [⚠️ The Dystopian Reality & Risks](#-the-dystopian-reality--risks)
+3. [🏗️ How This Project Implements It](#-how-this-project-implements-it)
+4. [🚀 Quick Start Simulation](#-quick-start-simulation)
+5. [🛠️ Technical Architecture](#-technical-architecture)
+6. [🔮 Future Workarounds (ZK-Proofs)](#-future-workarounds-zk-proofs)
 
 ---
 
-## 🌟 Key Features
+## 🧠 The Philosophy: Proof-of-Labor
 
-- **Autonomous Economy**: A self-running simulation driver (`genesis_driver.py`) that generates users, tasks, and transactions.
-- **AI Verification Agent**: A mock AI system that evaluates "proof of work" (GPS, photos, telemetry) to approve or reject claims.
-- **Real-time Dashboard**: A premium, skeuomorphic React UI that visualizes the economy in real-time.
-- **Dynamic GDP**: Watch the economy grow as more labor is verified.
-- **Simulation Control**: Pause, resume, and inspect the system state directly from the UI.
+### The Problem with Current Money
+*   **Fiat Currency**: Backed by government trust, prone to inflation.
+*   **Gold**: Backed by scarcity, hard to transport/divide.
+*   **Bitcoin (Proof-of-Work)**: Backed by *computational* energy expenditure. It proves you wasted electricity to solve a puzzle.
+*   **Ethereum (Proof-of-Stake)**: Backed by capital. Money makes more money.
 
----
+### The HEC Solution
+HEC proposes **Proof-of-Labor (PoL)**. The fundamental unit of value is the **Verified Human Hour**.
 
-## 🏗️ System Architecture
+If a currency is backed by human time—the one resource that is finite for every human regardless of status—it creates an intrinsically egalitarian economy. 1 Hour of a CEO's time = 1 Hour of a Janitor's time (in the purest sense of time scarcity).
 
-The system consists of three distinct components working in harmony:
-
-```mermaid
-graph TD
-    A[Frontend Dashboard] <-->|REST API| B[FastAPI Gateway]
-    B <-->|SQLAlchemy| C[(SQLite Database)]
-    D[Genesis Driver] <-->|Writes| C
-    D -->|Simulates| E[AI Verification Agent]
-    E -->|Validates| F[Task Submissions]
+**The Formula:**
+```
+Minted HEC = (Time_Spent) × (Skill_Complexity_Multiplier) × (Quality_Score)
 ```
 
-1.  **HEC Core (Backend)**: Python/FastAPI server that exposes data to the world.
-2.  **Genesis Driver (Simulation)**: A background process that acts as the "World Engine", creating users and simulating labor.
-3.  **HEC Dashboard (Frontend)**: A React/Vite application for visualization and control.
+In this system, you don't "mine" coins with a GPU. You "mine" coins by **doing things**: planting trees, writing code, cleaning streets, or learning a new language.
 
 ---
 
-## 🚀 Quick Start Guide
+## ⚠️ The Dystopian Reality & Risks
 
-Follow these steps to get your own instance running in minutes.
+While the ideal is noble, implementing this in the real world faces terrifying challenges. This project serves as a simulation to study these failure points.
+
+### 1. The Oracle Problem (The "Black Mirror" Factor)
+**The Challenge:** How does a digital blockchain know you *actually* cleaned the street?
+**The Failure Mode:** It requires total surveillance. To verify labor, the system needs GPS data, heart rate monitors, camera feeds, and constant telemetry.
+**The Risk:** This creates a "panopticon" economy where privacy is traded for income.
+
+### 2. The "Gamification" of Existence
+**The Challenge:** If every action has a monetary value, intrinsic motivation dies.
+**The Failure Mode:** People stop doing good deeds because "it's the right thing to do" and start doing them only "if the bounty is high enough."
+**The Risk:** A hyper-capitalist nightmare where a mother asks for payment to care for her child because it's "Care Labor."
+
+### 3. AI Bias in Verification
+**The Challenge:** The "Verifier" is an AI Agent (as simulated in this project).
+**The Failure Mode:** If the AI is trained on biased data, it might reject the labor of certain demographics or fail to recognize non-standard forms of work.
+**The Risk:** Systemic economic exclusion hard-coded into the currency itself.
+
+---
+
+## 🏗️ How This Project Implements It
+
+This codebase is a **Simulation of the Protocol**. It does not solve the Oracle Problem but assumes a "Perfect Oracle" to study the economic effects.
+
+### 1. The "World Engine" (`hec-core/genesis_driver.py`)
+This script acts as the **God Mode**. It:
+*   Generates synthetic users (Workers).
+*   Simulates them performing tasks (e.g., "Gardening", "Coding").
+*   Generates "Evidence" (Mock GPS logs, image hashes).
+
+### 2. The "Overseer" (`hec-core/agent/blockchain.py`)
+This is the **AI Oracle**. It:
+*   Receives the evidence.
+*   "Verifies" it (in this sim, it checks probability and metadata).
+*   Decides whether to Mint or Reject.
+
+### 3. The "Ledger" (SQLite Database)
+Unlike a blockchain, we use a simple SQL database for this prototype to track:
+*   `Users`: The workers.
+*   `TaskSubmissions`: The labor performed.
+*   `SystemConfig`: The global economic parameters.
+
+### 4. The "Interface" (React Dashboard)
+The frontend visualizes this invisible economy, showing the flow of human effort turning into digital value.
+
+---
+
+## 🚀 Quick Start Simulation
+
+Want to watch this economy run on your machine?
 
 ### Prerequisites
-- Python 3.9+
-- Node.js 16+
+*   Python 3.9+
+*   Node.js 16+
 
-### 1. Clone & Setup Backend
+### 1. Clone & Install
 ```bash
 git clone https://github.com/sohamds1/human-effort-coin.git
 cd human-effort-coin
 
-# Install Python dependencies
+# Backend
 pip install fastapi uvicorn sqlalchemy
-```
 
-### 2. Setup Frontend
-```bash
+# Frontend
 cd hec-dashboard
 npm install
-cd ..
 ```
 
-### 3. Run the System (The "Trinity")
-You need **3 separate terminal windows** to run the full stack:
+### 2. Run the "Trinity"
+Open **3 Terminal Windows**:
 
-**Terminal 1: The API Server**
+**Terminal 1 (The API):**
 ```bash
 cd hec-core
 python -m uvicorn api.main:app --port 8000 --reload
 ```
 
-**Terminal 2: The Simulation Driver**
+**Terminal 2 (The Simulation):**
 ```bash
 # Windows
 $env:PYTHONIOENCODING='utf-8'
 python hec-core/genesis_driver.py
-
-# Mac/Linux
-export PYTHONIOENCODING=utf-8
-python hec-core/genesis_driver.py
 ```
 
-**Terminal 3: The Dashboard**
+**Terminal 3 (The Dashboard):**
 ```bash
 cd hec-dashboard
 npm run dev
 ```
 
-Open **http://localhost:5173** to see your economy alive!
+Visit **http://localhost:5173** to watch the economy evolve.
 
 ---
 
-## 📂 Project Structure
+## 🔮 Future Workarounds (ZK-Proofs)
 
-Understanding the codebase is key to customization.
+How do we solve the Dystopian Surveillance problem?
 
-```text
-human-effort-coin/
-├── hec-core/                  # 🐍 PYTHON BACKEND
-│   ├── agent/                 # AI Logic
-│   │   └── blockchain.py      # Mock Ledger & Verification Logic
-│   ├── api/                   # FastAPI Server
-│   │   ├── main.py            # App Entry Point
-│   │   └── routes.py          # API Endpoints (/stats, /feed)
-│   ├── database/              # Database Layer
-│   │   └── models.py          # User, Task, Submission Models
-│   └── genesis_driver.py      # 🤖 THE SIMULATION ENGINE (Start here!)
-│
-├── hec-dashboard/             # ⚛️ REACT FRONTEND
-│   ├── src/
-│   │   ├── App.jsx            # Main Dashboard Logic
-│   │   └── index.css          # Styling (Skeuomorphic Design)
-│   └── ...
-│
-└── hec_world_v3.db            # SQLite Database (Auto-created)
-```
+The theoretical solution (not implemented here) is **Zero-Knowledge Proofs (ZKPs)**.
+*   **Concept:** A user proves they did the work *without* revealing the raw data.
+*   **Example:** Your phone proves you walked 5 miles using accelerometer data, but *does not* reveal your GPS location history to the network.
+*   **Hardware Oracles:** Trusted Enclave hardware (like Apple's Secure Enclave) signs the data locally. The network trusts the signature, not the raw video feed.
 
----
-
-## 🛠️ How to Fork & Customize
-
-This project is designed to be hacked. Here are the most common things you'll want to change.
-
-### 1. Adding New Task Types
-Want to add "Coding" or "Teaching" as verifiable labor?
-
-1. Open `hec-core/genesis_driver.py`
-2. Find the `TASK_TYPES` list.
-3. Add your new task:
-   ```python
-   {
-       "type": "OPEN_SOURCE_CONTRIBUTION",
-       "skill_multiplier": 2.5,  # High value work!
-       "evidence_required": ["GITHUB_PR_LINK", "MERGE_HASH"]
-   }
-   ```
-4. Restart the driver. The simulation will now generate these tasks!
-
-### 2. Modifying the Economic Formula
-Want to change how tokens are calculated?
-
-1. Open `hec-core/genesis_driver.py`
-2. Locate the `calculate_mint_amount` function.
-3. Change the logic:
-   ```python
-   # Example: Add a bonus for weekend work
-   mint_amount = (hours * skill_multiplier)
-   if is_weekend():
-       mint_amount *= 1.5
-   ```
-
-### 3. Customizing the Dashboard
-Want to change the color scheme or branding?
-
-1. Open `hec-dashboard/src/index.css`
-2. The design uses CSS variables. Change the `:root` values:
-   ```css
-   :root {
-     --primary-accent: #ff00ff; /* Change to your brand color */
-     --bg-dark: #0a0a0a;
-   }
-   ```
-3. To change the layout, edit `hec-dashboard/src/App.jsx`.
-
----
-
-## 🔌 API Reference
-
-The backend exposes a REST API at `http://localhost:8000`.
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET` | `/stats` | Global economy stats (GDP, Users, Minted) |
-| `GET` | `/feed` | Recent transactions and verifications |
-| `GET` | `/simulation/status` | Check if simulation is running |
-| `POST` | `/simulation/start` | Resume the simulation driver |
-| `POST` | `/simulation/stop` | Pause the simulation driver |
-
----
-
-## 🗺️ Roadmap & Ideas
-
-If you're looking for something to build, here are some great "Next Steps" for this project:
-
-- [ ] **Real AI Integration**: Replace the mock verification in `blockchain.py` with OpenAI/Gemini API to actually analyze image proofs.
-- [ ] **Mobile App**: Build a React Native app to allow *real* users to submit tasks (GPS/Camera).
-- [ ] **Blockchain Bridge**: Write a Solidity contract to mint *real* tokens on Polygon/Ethereum based on the Oracle's output.
-- [ ] **Multi-Tenant**: Allow multiple organizations to run their own HEC economies.
-
----
-
-## 🤝 Contributing
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+This project is the first step: **Proving the Economy works.**
+The next step is **Proving the Privacy works.**
 
 ---
 
 ## 📜 License
 
-Distributed under the MIT License. See `LICENSE` for more information.
-
----
-
-**Built with ❤️ by Soham Das**
+MIT License. Fork it. Fix it. Break it.
